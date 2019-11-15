@@ -95,77 +95,77 @@ const hasHiddenMigrationBanner = JSON.parse(
   localStorage.getItem(HIDE_MIGRATION_BANNER_KEY)
 );
 
-class MigrationNotificationBanner extends React.Component {
-  state = {
-    show: !hasHiddenMigrationBanner
-  };
+// class MigrationNotificationBanner extends React.Component {
+//   state = {
+//     show: !hasHiddenMigrationBanner
+//   };
 
-  hide = () => {
-    this.setState({ show: false });
-    localStorage.setItem(HIDE_MIGRATION_BANNER_KEY, 'true');
-  };
+//   hide = () => {
+//     this.setState({ show: false });
+//     localStorage.setItem(HIDE_MIGRATION_BANNER_KEY, 'true');
+//   };
 
-  render() {
-    if (!this.state.show) return null;
-    return (
-      <Banner
-        backgroundColor="#E8643F"
-        border="none"
-        style={{ position: 'relative' }}
-      >
-        <div
-          onClick={this.hide}
-          style={{
-            color: 'white',
-            position: 'absolute',
-            top: '0px',
-            right: '8px',
-            fontSize: '18px',
-            cursor: 'pointer'
-          }}
-        >
-          ×
-        </div>
-        <Content>
-          <BannerBody color="#FFFFFF">
-            <BannerContent style={{ fontSize: '17px' }}>
-              {/* <Flex>
-                <NotificationIcon />
-              </Flex> */}
-              We've made a critical update to the Maker Voting Contract. If
-              you've participated in any votes, please visit{' '}
-              <BannerLink
-                href="https://migrate.makerdao.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                migrate.makerdao.com
-              </BannerLink>{' '}
-              to withdraw your MKR from the old system. This interface is using
-              the new{' '}
-              <BannerLink
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://etherscan.io/address/0x9ef05f7f6deb616fd37ac3c959a2ddd25a54e4f5"
-              >
-                DSChief
-              </BannerLink>{' '}
-              and{' '}
-              <BannerLink
-                target="_blank"
-                rel="noopener noreferrer"
-                href=" https://etherscan.io/address/0x868ba9aeacA5B73c7C27F3B01588bf4F1339F2bC"
-              >
-                Vote Proxy{' '}
-              </BannerLink>
-              contracts deployed on May 6 2019.
-            </BannerContent>
-          </BannerBody>
-        </Content>
-      </Banner>
-    );
-  }
-}
+//   render() {
+//     if (!this.state.show) return null;
+//     return (
+//       <Banner
+//         backgroundColor="#E8643F"
+//         border="none"
+//         style={{ position: 'relative' }}
+//       >
+//         <div
+//           onClick={this.hide}
+//           style={{
+//             color: 'white',
+//             position: 'absolute',
+//             top: '0px',
+//             right: '8px',
+//             fontSize: '18px',
+//             cursor: 'pointer'
+//           }}
+//         >
+//           ×
+//         </div>
+//         <Content>
+//           <BannerBody color="#FFFFFF">
+//             <BannerContent style={{ fontSize: '17px' }}>
+//               {/* <Flex>
+//                 <NotificationIcon />
+//               </Flex> */}
+//               We've made a critical update to the Maker Voting Contract. If
+//               you've participated in any votes, please visit{' '}
+//               <BannerLink
+//                 href="https://migrate.makerdao.com/"
+//                 target="_blank"
+//                 rel="noopener noreferrer"
+//               >
+//                 migrate.makerdao.com
+//               </BannerLink>{' '}
+//               to withdraw your MKR from the old system. This interface is using
+//               the new{' '}
+//               <BannerLink
+//                 target="_blank"
+//                 rel="noopener noreferrer"
+//                 href="https://etherscan.io/address/0x9ef05f7f6deb616fd37ac3c959a2ddd25a54e4f5"
+//               >
+//                 DSChief
+//               </BannerLink>{' '}
+//               and{' '}
+//               <BannerLink
+//                 target="_blank"
+//                 rel="noopener noreferrer"
+//                 href=" https://etherscan.io/address/0x868ba9aeacA5B73c7C27F3B01588bf4F1339F2bC"
+//               >
+//                 Vote Proxy{' '}
+//               </BannerLink>
+//               contracts deployed on May 6 2019.
+//             </BannerContent>
+//           </BannerBody>
+//         </Content>
+//       </Banner>
+//     );
+//   }
+// }
 
 const Timeline = ({
   modalOpen,
