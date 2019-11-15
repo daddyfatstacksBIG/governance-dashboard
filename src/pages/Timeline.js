@@ -1,18 +1,18 @@
-import React, { Fragment } from 'react';
-import styled, { keyframes } from 'styled-components';
-import { connect } from 'react-redux';
+import React, {Fragment} from 'react';
+import {connect} from 'react-redux';
+import styled, {keyframes} from 'styled-components';
 
-import VoterStatus from '../components/VoterStatus';
+import {Banner, BannerBody, BannerContent} from '../components/Banner';
 import Button from '../components/Button';
 import Card from '../components/Card';
-import { toSlug, eq, formatDate, formatRound } from '../utils/misc';
-import theme, { fonts } from '../theme';
-import { modalOpen } from '../reducers/modal';
-import { activeCanVote, getActiveVotingFor } from '../reducers/accounts';
 import Vote from '../components/modals/Vote';
-import TillHat from '../components/TillHatMeta';
 import ExtendedLink from '../components/Onboarding/shared/ExtendedLink';
-import { Banner, BannerBody, BannerContent } from '../components/Banner';
+import TillHat from '../components/TillHatMeta';
+import VoterStatus from '../components/VoterStatus';
+import {activeCanVote, getActiveVotingFor} from '../reducers/accounts';
+import {modalOpen} from '../reducers/modal';
+import theme, {fonts} from '../theme';
+import {eq, formatDate, formatRound, toSlug} from '../utils/misc';
 
 const riseUp = keyframes`
 0% {
@@ -34,10 +34,10 @@ const SubHeading = styled.p`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  margin-top: ${({ mt }) => (mt ? `${mt}px` : '')};
+  margin-top: ${({mt}) => (mt ? `${mt}px` : '')};
   font-size: ${fonts.size.large};
   font-weight: ${fonts.weight.medium};
-  opacity: ${({ disabled }) => (disabled ? 0.7 : 1)};
+  opacity: ${({disabled}) => (disabled ? 0.7 : 1)};
   flex: none;
   position: relative;
 `;
@@ -59,7 +59,7 @@ const ProposalDetails = styled.div`
   justify-content: space-around;
 `;
 
-const StyledCard = styled(Card)`
+const StyledCard = styled(Card) `
   margin-bottom: 30px;
 `;
 
@@ -72,9 +72,9 @@ const Tag = styled.p`
   align-self: center;
   margin: auto;
   display: inline-block;
-  margin-left: ${({ ml }) => (ml ? `${ml}px` : '')};
-  background-color: ${({ green }) => (green ? '#c3f5ea' : '#FFE2D9')};
-  color: ${({ green }) => (green ? '#30BD9F' : '#E45432')};
+  margin-left: ${({ml}) => (ml ? `${ml}px` : '')};
+  background-color: ${({green}) => (green ? '#c3f5ea' : '#FFE2D9')};
+  color: ${({green}) => (green ? '#30BD9F' : '#E45432')};
 `;
 
 const Content = styled.div`
@@ -91,9 +91,8 @@ const BannerLink = styled.a`
 
 const HIDE_MIGRATION_BANNER_KEY = 'hide-migration-banner-0.1.0';
 
-const hasHiddenMigrationBanner = JSON.parse(
-  localStorage.getItem(HIDE_MIGRATION_BANNER_KEY)
-);
+const hasHiddenMigrationBanner =
+    JSON.parse(localStorage.getItem(HIDE_MIGRATION_BANNER_KEY));
 
 // class MigrationNotificationBanner extends React.Component {
 //   state = {
@@ -141,9 +140,8 @@ const hasHiddenMigrationBanner = JSON.parse(
 //               >
 //                 migrate.makerdao.com
 //               </BannerLink>{' '}
-//               to withdraw your MKR from the old system. This interface is using
-//               the new{' '}
-//               <BannerLink
+//               to withdraw your MKR from the old system. This interface is
+//               using the new{' '} <BannerLink
 //                 target="_blank"
 //                 rel="noopener noreferrer"
 //                 href="https://etherscan.io/address/0x9ef05f7f6deb616fd37ac3c959a2ddd25a54e4f5"
@@ -154,7 +152,8 @@ const hasHiddenMigrationBanner = JSON.parse(
 //               <BannerLink
 //                 target="_blank"
 //                 rel="noopener noreferrer"
-//                 href=" https://etherscan.io/address/0x868ba9aeacA5B73c7C27F3B01588bf4F1339F2bC"
+//                 href="
+//                 https://etherscan.io/address/0x868ba9aeacA5B73c7C27F3B01588bf4F1339F2bC"
 //               >
 //                 Vote Proxy{' '}
 //               </BannerLink>

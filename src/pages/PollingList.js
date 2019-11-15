@@ -1,19 +1,19 @@
-import React, { Fragment } from 'react';
-import styled, { keyframes } from 'styled-components';
-import { connect } from 'react-redux';
+import {Button} from '@makerdao/ui-components';
 import mixpanel from 'mixpanel-browser';
-import { Button } from '@makerdao/ui-components';
+import React, {Fragment} from 'react';
+import {connect} from 'react-redux';
+import styled, {keyframes} from 'styled-components';
 
+import {Banner, BannerBody, BannerContent} from '../components/Banner';
 import Card from '../components/Card';
-import Timer from '../components/Timer';
-import { toSlug, eq, formatRound, add } from '../utils/misc';
-import theme, { fonts } from '../theme';
-import { modalOpen } from '../reducers/modal';
-import { getWinningProp } from '../reducers/proposals';
-import ExtendedLink from '../components/Onboarding/shared/ExtendedLink';
-import { Banner, BannerBody, BannerContent } from '../components/Banner';
 import Loader from '../components/Loader';
+import ExtendedLink from '../components/Onboarding/shared/ExtendedLink';
+import Timer from '../components/Timer';
 import VoterStatus from '../components/VoterStatus';
+import {modalOpen} from '../reducers/modal';
+import {getWinningProp} from '../reducers/proposals';
+import theme, {fonts} from '../theme';
+import {add, eq, formatRound, toSlug} from '../utils/misc';
 
 const Padding = styled.div`
   margin-top: 20px;
@@ -39,10 +39,10 @@ const SubHeading = styled.p`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  margin-top: ${({ mt }) => (mt ? `${mt}px` : '')};
+  margin-top: ${({mt}) => (mt ? `${mt}px` : '')};
   font-size: ${fonts.size.large};
   font-weight: ${fonts.weight.medium};
-  opacity: ${({ disabled }) => (disabled ? 0.7 : 1)};
+  opacity: ${({disabled}) => (disabled ? 0.7 : 1)};
   flex: none;
   position: relative;
 `;
@@ -64,10 +64,10 @@ const ProposalDetails = styled.div`
   justify-content: space-around;
 `;
 
-const StyledCard = styled(Card)`
+const StyledCard = styled(Card) `
   margin-bottom: 30px;
 `;
-const StyledButton = styled(Button)`
+const StyledButton = styled(Button) `
   position: absolute;
   top: 16%;
   right: 2%;
@@ -87,9 +87,8 @@ const BannerLink = styled.a`
 
 const HIDE_MIGRATION_BANNER_KEY = 'hide-migration-banner-0.1.0';
 
-const hasHiddenMigrationBanner = JSON.parse(
-  localStorage.getItem(HIDE_MIGRATION_BANNER_KEY)
-);
+const hasHiddenMigrationBanner =
+    JSON.parse(localStorage.getItem(HIDE_MIGRATION_BANNER_KEY));
 
 // class MigrationNotificationBanner extends React.Component {
 //   state = {
@@ -134,9 +133,8 @@ const hasHiddenMigrationBanner = JSON.parse(
 //               >
 //                 migrate.makerdao.com
 //               </BannerLink>{' '}
-//               to withdraw your MKR from the old system. This interface is using
-//               the new{' '}
-//               <BannerLink
+//               to withdraw your MKR from the old system. This interface is
+//               using the new{' '} <BannerLink
 //                 target="_blank"
 //                 rel="noopener noreferrer"
 //                 href="https://etherscan.io/address/0x9ef05f7f6deb616fd37ac3c959a2ddd25a54e4f5"
@@ -147,7 +145,8 @@ const hasHiddenMigrationBanner = JSON.parse(
 //               <BannerLink
 //                 target="_blank"
 //                 rel="noopener noreferrer"
-//                 href=" https://etherscan.io/address/0x868ba9aeacA5B73c7C27F3B01588bf4F1339F2bC"
+//                 href="
+//                 https://etherscan.io/address/0x868ba9aeacA5B73c7C27F3B01588bf4F1339F2bC"
 //               >
 //                 Vote Proxy{' '}
 //               </BannerLink>
@@ -184,37 +183,33 @@ const Black = styled.span`
   color: ${theme.text.default};
 `;
 
-const Strong = styled(Black)`
+const Strong = styled(Black) `
   color: ${theme.text.default};
   font-weight: bold;
 `;
 
-export const VotingWeightBanner = ({ accountsFetching, activeAccount }) => {
-  if (accountsFetching || !activeAccount) return <Padding />;
+export const VotingWeightBanner = ({accountsFetching, activeAccount}) => {
+  if (accountsFetching || !activeAccount)
+    return <Padding />;
 
   // mkr in wallet + mkr locked in chief (including mkr locked via a vote proxy)
-  const pollVotingPower = add(
-    activeAccount.proxy.votingPower,
-    activeAccount.mkrBalance
-  );
+  const pollVotingPower =
+      add(activeAccount.proxy.votingPower, activeAccount.mkrBalance);
 
   if (activeAccount.hasProxy) {
     return <VoterStatus />;
   } else {
-    return (
-      <FadeIn>
-        <SmallMediumText>
-          <Strong>Connected wallet: </Strong>
-          <Black>{formatRound(pollVotingPower, 4)} MKR</Black>{' '}
-        </SmallMediumText>
-      </FadeIn>
-    );
+    return (<FadeIn><SmallMediumText><Strong>Connected wallet: <
+            /Strong>
+          <Black>{formatRound(pollVotingPower, 4)} MKR</Black>{
+        ' '}</SmallMediumText>
+      </FadeIn>);
   }
 };
 
 const PollingList = ({
   accountsFetching,
-  polling: { polls },
+  polling : {polls},
   activeAccount,
   proposals,
   approvals,
