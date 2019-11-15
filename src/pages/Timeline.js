@@ -1,18 +1,18 @@
-import React, {Fragment} from 'react';
-import {connect} from 'react-redux';
-import styled, {keyframes} from 'styled-components';
+import React, { Fragment } from "react";
+import { connect } from "react-redux";
+import styled, { keyframes } from "styled-components";
 
-import {Banner, BannerBody, BannerContent} from '../components/Banner';
-import Button from '../components/Button';
-import Card from '../components/Card';
-import Vote from '../components/modals/Vote';
-import ExtendedLink from '../components/Onboarding/shared/ExtendedLink';
-import TillHat from '../components/TillHatMeta';
-import VoterStatus from '../components/VoterStatus';
-import {activeCanVote, getActiveVotingFor} from '../reducers/accounts';
-import {modalOpen} from '../reducers/modal';
-import theme, {fonts} from '../theme';
-import {eq, formatDate, formatRound, toSlug} from '../utils/misc';
+import { Banner, BannerBody, BannerContent } from "../components/Banner";
+import Button from "../components/Button";
+import Card from "../components/Card";
+import Vote from "../components/modals/Vote";
+import ExtendedLink from "../components/Onboarding/shared/ExtendedLink";
+import TillHat from "../components/TillHatMeta";
+import VoterStatus from "../components/VoterStatus";
+import { activeCanVote, getActiveVotingFor } from "../reducers/accounts";
+import { modalOpen } from "../reducers/modal";
+import theme, { fonts } from "../theme";
+import { eq, formatDate, formatRound, toSlug } from "../utils/misc";
 
 const riseUp = keyframes`
 0% {
@@ -34,10 +34,10 @@ const SubHeading = styled.p`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  margin-top: ${({mt}) => (mt ? `${mt}px` : '')};
+  margin-top: ${({ mt }) => (mt ? `${mt}px` : "")};
   font-size: ${fonts.size.large};
   font-weight: ${fonts.weight.medium};
-  opacity: ${({disabled}) => (disabled ? 0.7 : 1)};
+  opacity: ${({ disabled }) => (disabled ? 0.7 : 1)};
   flex: none;
   position: relative;
 `;
@@ -59,7 +59,7 @@ const ProposalDetails = styled.div`
   justify-content: space-around;
 `;
 
-const StyledCard = styled(Card) `
+const StyledCard = styled(Card)`
   margin-bottom: 30px;
 `;
 
@@ -72,9 +72,9 @@ const Tag = styled.p`
   align-self: center;
   margin: auto;
   display: inline-block;
-  margin-left: ${({ml}) => (ml ? `${ml}px` : '')};
-  background-color: ${({green}) => (green ? '#c3f5ea' : '#FFE2D9')};
-  color: ${({green}) => (green ? '#30BD9F' : '#E45432')};
+  margin-left: ${({ ml }) => (ml ? `${ml}px` : "")};
+  background-color: ${({ green }) => (green ? "#c3f5ea" : "#FFE2D9")};
+  color: ${({ green }) => (green ? "#30BD9F" : "#E45432")};
 `;
 
 const Content = styled.div`
@@ -89,10 +89,11 @@ const BannerLink = styled.a`
   font-weight: bold;
 `;
 
-const HIDE_MIGRATION_BANNER_KEY = 'hide-migration-banner-0.1.0';
+const HIDE_MIGRATION_BANNER_KEY = "hide-migration-banner-0.1.0";
 
-const hasHiddenMigrationBanner =
-    JSON.parse(localStorage.getItem(HIDE_MIGRATION_BANNER_KEY));
+const hasHiddenMigrationBanner = JSON.parse(
+  localStorage.getItem(HIDE_MIGRATION_BANNER_KEY)
+);
 
 // class MigrationNotificationBanner extends React.Component {
 //   state = {
@@ -182,7 +183,7 @@ const Timeline = ({
   );
   otherProposals.sort((a, b) => b.end_timestamp - a.end_timestamp);
 
-  const MCD_SOURCE = '0xF44113760c4f70aFeEb412C63bC713B13E6e202E';
+  const MCD_SOURCE = "0xF44113760c4f70aFeEb412C63bC713B13E6e202E";
 
   return (
     <Fragment>
@@ -193,7 +194,7 @@ const Timeline = ({
           <StyledCard>
             <Card.Element height={proposalWrapperHeight}>
               <ProposalDetails>
-                <div style={{ display: 'flex' }}>
+                <div style={{ display: "flex" }}>
                   <ExtendedLink
                     to={`/executive-proposal/${toSlug(hatProposal.title)}`}
                   >
@@ -224,8 +225,8 @@ const Timeline = ({
                     <div>
                       <Tag>
                         {hatProposal.source === MCD_SOURCE
-                          ? 'Available for execution on November 18th at 16:00 UTC'
-                          : 'Available for execution'}
+                          ? "Available for execution on November 18th at 16:00 UTC"
+                          : "Available for execution"}
                       </Tag>
                     </div>
                   )}
@@ -245,8 +246,8 @@ const Timeline = ({
                   }
                 >
                   {votingFor.includes(hat.address.toLowerCase())
-                    ? 'Withdraw vote'
-                    : 'Vote for no change'}
+                    ? "Withdraw vote"
+                    : "Vote for no change"}
                 </Button>
                 <br />
                 <TillHat candidate={hatProposal.source} />
@@ -283,8 +284,8 @@ const Timeline = ({
                   <div>
                     <Tag>
                       {proposal.source === MCD_SOURCE
-                        ? 'Available for execution on November 18th at 16:00 UTC'
-                        : 'Available for execution'}
+                        ? "Available for execution on November 18th at 16:00 UTC"
+                        : "Available for execution"}
                     </Tag>
                   </div>
                 ) : null}
@@ -306,8 +307,8 @@ const Timeline = ({
                     }
                   >
                     {votingFor.includes(proposal.source.toLowerCase())
-                      ? 'Withdraw vote'
-                      : 'Vote for this Proposal'}
+                      ? "Withdraw vote"
+                      : "Vote for this Proposal"}
                   </Button>
                   <br />
                   <TillHat candidate={proposal.source} />

@@ -1,27 +1,27 @@
-import mixpanel from 'mixpanel-browser';
-import {isEmpty, isNil} from 'ramda';
-import React, {Fragment} from 'react';
-import ReactMarkdown from 'react-markdown';
-import {connect} from 'react-redux';
-import styled, {keyframes} from 'styled-components';
+import mixpanel from "mixpanel-browser";
+import { isEmpty, isNil } from "ramda";
+import React, { Fragment } from "react";
+import ReactMarkdown from "react-markdown";
+import { connect } from "react-redux";
+import styled, { keyframes } from "styled-components";
 
-import Button from '../components/Button';
-import Card from '../components/Card';
-import Dropdown from '../components/Dropdown';
-import Loader from '../components/Loader';
-import PollingVote from '../components/modals/PollingVote';
-import ExternalLink from '../components/Onboarding/shared/ExternalLink';
-import {activeCanVote, getActiveVotingFor} from '../reducers/accounts';
-import {modalOpen} from '../reducers/modal';
-import {getOptionVotingFor, pollDataInit} from '../reducers/polling';
-import {getWinningProp} from '../reducers/proposals';
-import theme, {colors} from '../theme';
-import {MIN_MKR_PERCENTAGE} from '../utils/constants';
-import {ethScanLink} from '../utils/ethereum';
-import {cutMiddle, eq, formatRound, toSlug} from '../utils/misc';
+import Button from "../components/Button";
+import Card from "../components/Card";
+import Dropdown from "../components/Dropdown";
+import Loader from "../components/Loader";
+import PollingVote from "../components/modals/PollingVote";
+import ExternalLink from "../components/Onboarding/shared/ExternalLink";
+import { activeCanVote, getActiveVotingFor } from "../reducers/accounts";
+import { modalOpen } from "../reducers/modal";
+import { getOptionVotingFor, pollDataInit } from "../reducers/polling";
+import { getWinningProp } from "../reducers/proposals";
+import theme, { colors } from "../theme";
+import { MIN_MKR_PERCENTAGE } from "../utils/constants";
+import { ethScanLink } from "../utils/ethereum";
+import { cutMiddle, eq, formatRound, toSlug } from "../utils/misc";
 
-import NotFound from './NotFound';
-import {VotingWeightBanner} from './PollingList';
+import NotFound from "./NotFound";
+import { VotingWeightBanner } from "./PollingList";
 
 const riseUp = keyframes`
 0% {
@@ -56,9 +56,9 @@ const VoteSelection = styled.div`
   justify-content: space-between;
 `;
 
-const DetailsPanelCard = styled(Card) `
+const DetailsPanelCard = styled(Card)`
   margin-bottom: 29px;
-  font-size: ${({theme}) => theme.fonts.size.medium};
+  font-size: ${({ theme }) => theme.fonts.size.medium};
   padding: 14px 20px;
 `;
 
@@ -83,7 +83,7 @@ const Black = styled.span`
   color: ${theme.text.default};
 `;
 
-const Strong = styled(Black) `
+const Strong = styled(Black)`
   color: ${theme.text.default};
   font-weight: bold;
 `;
@@ -93,12 +93,12 @@ const Blue = styled.span`
   cursor: pointer;
 `;
 
-const DetailsItem = styled(Black) `
+const DetailsItem = styled(Black)`
   display: flex;
   flex-direction: row;
   padding: 8px 0px;
   font-size: 15px;
-  border-bottom: 1px solid rgb(${colors['light_grey2']});
+  border-bottom: 1px solid rgb(${colors["light_grey2"]});
   &:last-child {
     border-bottom: none;
   }
@@ -106,7 +106,7 @@ const DetailsItem = styled(Black) `
 
 const DetailsCardText = styled.p`
   width: 110px;
-  color: rgb(${colors['grey']});
+  color: rgb(${colors["grey"]});
   font-size: 15px;
 `;
 
@@ -116,15 +116,15 @@ const DropdownText = styled.p`
   width: 125px;
   margin-left: 13px;
   margin-right: 13px;
-  color: ${({color}) => (color ? `rgb(${colors[color]})` : 'black')};
+  color: ${({ color }) => (color ? `rgb(${colors[color]})` : "black")};
 `;
 
-const VoteButton = styled(Button) `
+const VoteButton = styled(Button)`
   border: 0px;
   padding: 0px;
 `;
 
-const DescriptionCard = styled(Card) `
+const DescriptionCard = styled(Card)`
   margin: 0;
   max-width: 750px;
   padding: 0px 25px 93px 25px;
@@ -132,17 +132,17 @@ const DescriptionCard = styled(Card) `
   line-height: 30px;
 `;
 
-const DownloadButton = styled(Button) `
+const DownloadButton = styled(Button)`
   position: absolute;
   bottom: 20px;
 `;
 
-const DetailsCardItem = ({name,
-                          value,
-                          component}) => (<DetailsItem><DetailsCardText>{
-    name}</DetailsCardText>
+const DetailsCardItem = ({ name, value, component }) => (
+  <DetailsItem>
+    <DetailsCardText>{name}</DetailsCardText>
     {value ? value : component}
-  </DetailsItem>);
+  </DetailsItem>
+);
 
 const getTotalVotesForOption = (voteBreakdown, selectedOptionId) => {
   return voteBreakdown[selectedOptionId].mkrSupport;
@@ -166,18 +166,18 @@ const VotedFor = ({
   if (optionVotingFor)
     return (
       <VoteStatusText>
-        <Black>{active ? 'Currently voting: ' : 'Voted for: '}</Black>
+        <Black>{active ? "Currently voting: " : "Voted for: "}</Black>
         <Strong>{optionVotingFor} </Strong>
         {active && (
           <Fragment>
             <Black>| </Black>
             <Blue
               onClick={() => {
-                mixpanel.track('btn-click', {
-                  id: 'withdraw',
-                  product: 'governance-dashboard',
-                  page: 'Polling',
-                  section: 'voting-panel'
+                mixpanel.track("btn-click", {
+                  id: "withdraw",
+                  product: "governance-dashboard",
+                  page: "Polling",
+                  section: "voting-panel"
                 });
                 modalOpen(PollingVote, {
                   poll: {
@@ -197,9 +197,9 @@ const VotedFor = ({
     );
   else if (!poll.legacyPoll)
     return (
-      <VoteStatusText style={{ display: 'flex' }}>
-        <Black style={{ margin: 'auto', fontStyle: 'oblique' }}>
-          {active ? 'Not currently voting' : 'You did not vote'}
+      <VoteStatusText style={{ display: "flex" }}>
+        <Black style={{ margin: "auto", fontStyle: "oblique" }}>
+          {active ? "Not currently voting" : "You did not vote"}
         </Black>
       </VoteStatusText>
     );
@@ -220,11 +220,11 @@ class VotingPanel extends React.Component {
       selectedOption: value,
       selectedOptionId
     });
-    mixpanel.track('input-change', {
-      id: 'dropdown-select',
-      product: 'governance-dashboard',
-      page: 'Polling',
-      section: 'voting-panel'
+    mixpanel.track("input-change", {
+      id: "dropdown-select",
+      product: "governance-dashboard",
+      page: "Polling",
+      section: "voting-panel"
     });
   };
 
@@ -247,7 +247,7 @@ class VotingPanel extends React.Component {
               <DropdownText color="green">{item}</DropdownText>
             )}
             renderRowItem={item => <DropdownText>{item}</DropdownText>}
-            value={selectedOption || optionVotingFor || 'Please choose...'}
+            value={selectedOption || optionVotingFor || "Please choose..."}
             onSelect={this.onDropdownSelect}
             emptyMsg="Not available"
           />
@@ -263,11 +263,11 @@ class VotingPanel extends React.Component {
               selectedOption === optionVotingFor
             }
             onClick={() => {
-              mixpanel.track('btn-click', {
-                id: 'vote',
-                product: 'governance-dashboard',
-                page: 'Polling',
-                section: 'voting-panel'
+              mixpanel.track("btn-click", {
+                id: "vote",
+                product: "governance-dashboard",
+                page: "Polling",
+                section: "voting-panel"
               });
               modalOpen(PollingVote, {
                 poll: {
@@ -291,29 +291,29 @@ const timeLeft = (startDate, endDate, active) => {
   const now = new Date();
   let timeLeft = Math.floor(endDate / 1000) - Math.floor(now / 1000);
   const days = Math.floor(timeLeft / (3600 * 24));
-  const Sday = days !== 1 ? 's' : '';
+  const Sday = days !== 1 ? "s" : "";
   timeLeft -= days * 3600 * 24;
   const hours = Math.floor(timeLeft / 3600);
-  const Shour = hours !== 1 ? 's' : '';
+  const Shour = hours !== 1 ? "s" : "";
   timeLeft -= hours * 3600;
   const minutes = Math.floor(timeLeft / 60);
-  const Sminute = minutes !== 1 ? 's' : '';
+  const Sminute = minutes !== 1 ? "s" : "";
 
   return active
     ? `${days} day${Sday} ${hours} hr${Shour} ${minutes} min${Sminute}`
-    : endDate.toLocaleDateString('en-GB', {
-        weekday: 'short',
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric'
+    : endDate.toLocaleDateString("en-GB", {
+        weekday: "short",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric"
       });
 };
 
 const downloadRawPollData = (multiHash, rawData) => {
-  const element = document.createElement('a');
-  const file = new Blob([rawData], { type: 'text/plain' });
+  const element = document.createElement("a");
+  const file = new Blob([rawData], { type: "text/plain" });
   element.href = URL.createObjectURL(file);
   element.download = `${multiHash}.txt`;
   document.body.appendChild(element);
@@ -366,7 +366,7 @@ class Polling extends React.Component {
 
   validateLink = link => {
     if (!link) return null;
-    return link.indexOf('http') === 0 ? link : `https://${link}`;
+    return link.indexOf("http") === 0 ? link : `https://${link}`;
   };
 
   render() {
@@ -399,9 +399,9 @@ class Polling extends React.Component {
 
     const numUniqueVoters = poll.numUniqueVoters
       ? poll.numUniqueVoters.toString()
-      : '0';
+      : "0";
 
-    const timeLeftString = active ? 'Ends In' : 'Ended On';
+    const timeLeftString = active ? "Ends In" : "Ended On";
 
     return (
       <Fragment>
@@ -445,11 +445,11 @@ class Polling extends React.Component {
                 totalVotes={totalVotes}
                 alreadyVotingFor={true}
               />
-              <DetailsPanelCard style={{ padding: '0px 30px 15px 30px' }}>
+              <DetailsPanelCard style={{ padding: "0px 30px 15px 30px" }}>
                 <CardTitle>Details</CardTitle>
                 {[
                   {
-                    name: 'Source',
+                    name: "Source",
                     component: (
                       <ExternalLink
                         href={ethScanLink(poll.source, network)}
@@ -460,14 +460,14 @@ class Polling extends React.Component {
                     )
                   },
                   {
-                    name: 'Started',
-                    value: poll.startDate.toLocaleDateString('en-GB', {
-                      weekday: 'short',
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                      hour: 'numeric',
-                      minute: 'numeric'
+                    name: "Started",
+                    value: poll.startDate.toLocaleDateString("en-GB", {
+                      weekday: "short",
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric"
                     })
                   },
                   {
@@ -475,7 +475,7 @@ class Polling extends React.Component {
                     value: timeLeft(poll.startDate, poll.endDate, active)
                   },
                   {
-                    name: 'Questions?',
+                    name: "Questions?",
                     component: (
                       <ExternalLink
                         href="https://makerdao.com/en/"
@@ -486,7 +486,7 @@ class Polling extends React.Component {
                     )
                   },
                   {
-                    name: 'Discussion',
+                    name: "Discussion",
                     component: (
                       <ExternalLink
                         href={this.validateLink(discussion_link)}
@@ -507,15 +507,15 @@ class Polling extends React.Component {
                     <CardTitle>Voting Stats</CardTitle>
                     {[
                       {
-                        name: 'Total votes',
+                        name: "Total votes",
                         value: isNaN(poll.totalVotes)
-                          ? '----'
+                          ? "----"
                           : `${formatRound(poll.totalVotes, 2)} MKR`
                       },
                       {
-                        name: 'Participation',
+                        name: "Participation",
                         value: isNaN(poll.participation)
-                          ? '----'
+                          ? "----"
                           : parseFloat(poll.participation) <
                               MIN_MKR_PERCENTAGE &&
                             parseFloat(poll.participation) !== 0
@@ -523,7 +523,7 @@ class Polling extends React.Component {
                           : `${formatRound(poll.participation, 2)}%`
                       },
                       {
-                        name: 'Unique voters',
+                        name: "Unique voters",
                         value: numUniqueVoters
                       }
                     ].map((item, i) => (
@@ -566,7 +566,7 @@ function VoteBreakdown({ poll }) {
       ) : (
         <>
           {options.map((_, i) => (
-            <DetailsCardItem key={i} {...{ name: options[i], value: '----' }} />
+            <DetailsCardItem key={i} {...{ name: options[i], value: "----" }} />
           ))}
         </>
       )}
@@ -589,7 +589,7 @@ const reduxProps = (state, { match }) => {
 
   if (poll && poll.legacyPoll) {
     const winningProp = getWinningProp(state, poll.pollId);
-    poll.winningProposal = winningProp ? winningProp.title : 'Not applicable';
+    poll.winningProposal = winningProp ? winningProp.title : "Not applicable";
   }
 
   return {

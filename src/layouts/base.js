@@ -1,22 +1,22 @@
-import {Footer} from '@makerdao/ui-components';
-import mixpanel from 'mixpanel-browser';
-import PropTypes from 'prop-types';
-import React from 'react';
-import {connect} from 'react-redux';
-import {withRouter} from 'react-router';
-import {NavLink} from 'react-router-dom';
-import styled from 'styled-components';
+import { Footer } from "@makerdao/ui-components";
+import mixpanel from "mixpanel-browser";
+import PropTypes from "prop-types";
+import React from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import { NavLink } from "react-router-dom";
+import styled from "styled-components";
 
-import AccountBox from '../components/AccountBox';
-import Loader from '../components/Loader';
-import Modals from '../components/modals';
-import SecureVoting from '../components/modals/SecureVoting';
-import NetworkIndicator from '../components/NetworkIndicator';
-import Onboarding from '../components/Onboarding';
-import Toasts from '../components/Toasts';
-import {modalOpen} from '../reducers/modal';
-import {onboardingOpen, OnboardingStates} from '../reducers/onboarding';
-import {colors, fonts} from '../theme';
+import AccountBox from "../components/AccountBox";
+import Loader from "../components/Loader";
+import Modals from "../components/modals";
+import SecureVoting from "../components/modals/SecureVoting";
+import NetworkIndicator from "../components/NetworkIndicator";
+import Onboarding from "../components/Onboarding";
+import Toasts from "../components/Toasts";
+import { modalOpen } from "../reducers/modal";
+import { onboardingOpen, OnboardingStates } from "../reducers/onboarding";
+import { colors, fonts } from "../theme";
 
 const StyledLayout = styled.div`
   position: relative;
@@ -70,11 +70,11 @@ const Flex = styled.div`
 
 const DimHeaderElement = styled.div`
   cursor: pointer;
-  color: ${({theme}) => theme.text.header_dim};
+  color: ${({ theme }) => theme.text.header_dim};
   font-weight: 500;
   font-size: ${fonts.size.medium};
-  margin-right: ${({mr}) => (mr ? `${mr}px` : '')};
-  margin-left: ${({ml}) => (ml ? `${ml}px` : '')};
+  margin-right: ${({ mr }) => (mr ? `${mr}px` : "")};
+  margin-left: ${({ ml }) => (ml ? `${ml}px` : "")};
 `;
 
 const StyledLinkWrapper = styled.div`
@@ -85,11 +85,11 @@ const StyledLinkWrapper = styled.div`
 `;
 
 const StyledLink = styled(NavLink).attrs({
-  exact : true,
-  activeStyle : {fontWeight : 'bold'}
-}) `
+  exact: true,
+  activeStyle: { fontWeight: "bold" }
+})`
   position: absolute;
-  right: ${({r}) => (!isNaN(r) ? `${r}px` : '')};
+  right: ${({ r }) => (!isNaN(r) ? `${r}px` : "")};
   opacity: 0.9;
   padding: 5px 14px;
   color: rgb(${colors.white});
@@ -105,7 +105,7 @@ const Padding = styled.div`
 `;
 
 const NetworkNotification = styled.div`
-  color: ${({theme}) => theme.text.header_dim};
+  color: ${({ theme }) => theme.text.header_dim};
   align-self: center;
   font-weight: 500;
 `;
@@ -133,12 +133,15 @@ const BaseLayout = ({
   location
 }) => {
   const childrenShouldMount =
-      !metamaskFetching && proposalsAvailable && !wrongNetwork;
+    !metamaskFetching && proposalsAvailable && !wrongNetwork;
   const noContentMsg = wrongNetwork ? (
-    'Please switch network to Kovan or Mainnet'
+    "Please switch network to Kovan or Mainnet"
   ) : (
     <Loader
-  size = {20} mt = {125} mb = {200} color = "header"
+      size={20}
+      mt={125}
+      mb={200}
+      color="header"
       background="background"
     />
   );
@@ -147,54 +150,71 @@ const BaseLayout = ({
       <StyledHeader>
         <HeaderBottom>
           <HeaderBottomContent>
-            <div style={{
-    display: 'flex', paddingLeft: '2.5rem' }}>
+            <div
+              style={{
+                display: "flex",
+                paddingLeft: "2.5rem"
+              }}
+            >
               <NavLink
-  style =
-  {
-    { color: 'white' }
-  } to =
-      {{ pathname: '/', search: location.search }} >
-      Governance<
-          /NavLink>
-              <NetworkNotification style={{ marginLeft: '16px' }}>
-                {childrenShouldMount && <NetworkIndicator network={network} />
-}</NetworkNotification>
-            </div><Flex><StyledLinkWrapper>< StyledLink
-to = {
-  { pathname: '/', search: location.search }
-} r =
-    {107} >
-    Executive<
-        /StyledLink>
+                style={{ color: "white" }}
+                to={{ pathname: "/", search: location.search }}
+              >
+                Governance
+              </NavLink>
+              <NetworkNotification style={{ marginLeft: "16px" }}>
+                {childrenShouldMount && <NetworkIndicator network={network} />}
+              </NetworkNotification>
+            </div>
+            <Flex>
+              <StyledLinkWrapper>
                 <StyledLink
-                  to={{ pathname: '/polling', search: location.search }} r =
-            {6}>Polling</StyledLink>
-              </StyledLinkWrapper><
-    DimHeaderElement
-onClick = {
-  () => {
-    mixpanel.track('btn-click', {
-      id : 'voting-contract',
-      product : 'governance-dashboard',
-      page : 'BaseLayout',
-      section : 'header'
-    });
-    if (!accountsFetching && onboardingState !== OnboardingStates.FINISHED)
-      onboardingOpen();
-    if (!accountsFetching && onboardingState === OnboardingStates.FINISHED)
-      modalOpen(SecureVoting);
-  }
-} mr = {50} ml =
-    {50} >
-    Voting Contract<
-        /DimHeaderElement>
+                  to={{ pathname: "/", search: location.search }}
+                  r={107}
+                >
+                  Executive
+                </StyledLink>
+                <StyledLink
+                  to={{ pathname: "/polling", search: location.search }}
+                  r={6}
+                >
+                  Polling
+                </StyledLink>
+              </StyledLinkWrapper>
+              <DimHeaderElement
+                onClick={() => {
+                  mixpanel.track("btn-click", {
+                    id: "voting-contract",
+                    product: "governance-dashboard",
+                    page: "BaseLayout",
+                    section: "header"
+                  });
+                  if (
+                    !accountsFetching &&
+                    onboardingState !== OnboardingStates.FINISHED
+                  )
+                    onboardingOpen();
+                  if (
+                    !accountsFetching &&
+                    onboardingState === OnboardingStates.FINISHED
+                  )
+                    modalOpen(SecureVoting);
+                }}
+                mr={50}
+                ml={50}
+              >
+                Voting Contract
+              </DimHeaderElement>
               <AccountBox fetching={!wrongNetwork && metamaskFetching} />
-    </Flex>
+            </Flex>
           </HeaderBottomContent>
-    </HeaderBottom>
-      </StyledHeader><AppWrapper><StyledColumn>
-    <StyledContent> {childrenShouldMount ? (
+        </HeaderBottom>
+      </StyledHeader>
+      <AppWrapper>
+        <StyledColumn>
+          <StyledContent>
+            {" "}
+            {childrenShouldMount ? (
               children
             ) : (
               <NoContent>{noContentMsg}</NoContent>

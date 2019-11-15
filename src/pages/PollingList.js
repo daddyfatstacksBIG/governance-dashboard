@@ -1,19 +1,19 @@
-import {Button} from '@makerdao/ui-components';
-import mixpanel from 'mixpanel-browser';
-import React, {Fragment} from 'react';
-import {connect} from 'react-redux';
-import styled, {keyframes} from 'styled-components';
+import { Button } from "@makerdao/ui-components";
+import mixpanel from "mixpanel-browser";
+import React, { Fragment } from "react";
+import { connect } from "react-redux";
+import styled, { keyframes } from "styled-components";
 
-import {Banner, BannerBody, BannerContent} from '../components/Banner';
-import Card from '../components/Card';
-import Loader from '../components/Loader';
-import ExtendedLink from '../components/Onboarding/shared/ExtendedLink';
-import Timer from '../components/Timer';
-import VoterStatus from '../components/VoterStatus';
-import {modalOpen} from '../reducers/modal';
-import {getWinningProp} from '../reducers/proposals';
-import theme, {fonts} from '../theme';
-import {add, eq, formatRound, toSlug} from '../utils/misc';
+import { Banner, BannerBody, BannerContent } from "../components/Banner";
+import Card from "../components/Card";
+import Loader from "../components/Loader";
+import ExtendedLink from "../components/Onboarding/shared/ExtendedLink";
+import Timer from "../components/Timer";
+import VoterStatus from "../components/VoterStatus";
+import { modalOpen } from "../reducers/modal";
+import { getWinningProp } from "../reducers/proposals";
+import theme, { fonts } from "../theme";
+import { add, eq, formatRound, toSlug } from "../utils/misc";
 
 const Padding = styled.div`
   margin-top: 20px;
@@ -39,10 +39,10 @@ const SubHeading = styled.p`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  margin-top: ${({mt}) => (mt ? `${mt}px` : '')};
+  margin-top: ${({ mt }) => (mt ? `${mt}px` : "")};
   font-size: ${fonts.size.large};
   font-weight: ${fonts.weight.medium};
-  opacity: ${({disabled}) => (disabled ? 0.7 : 1)};
+  opacity: ${({ disabled }) => (disabled ? 0.7 : 1)};
   flex: none;
   position: relative;
 `;
@@ -64,10 +64,10 @@ const ProposalDetails = styled.div`
   justify-content: space-around;
 `;
 
-const StyledCard = styled(Card) `
+const StyledCard = styled(Card)`
   margin-bottom: 30px;
 `;
-const StyledButton = styled(Button) `
+const StyledButton = styled(Button)`
   position: absolute;
   top: 16%;
   right: 2%;
@@ -85,10 +85,11 @@ const BannerLink = styled.a`
   font-weight: bold;
 `;
 
-const HIDE_MIGRATION_BANNER_KEY = 'hide-migration-banner-0.1.0';
+const HIDE_MIGRATION_BANNER_KEY = "hide-migration-banner-0.1.0";
 
-const hasHiddenMigrationBanner =
-    JSON.parse(localStorage.getItem(HIDE_MIGRATION_BANNER_KEY));
+const hasHiddenMigrationBanner = JSON.parse(
+  localStorage.getItem(HIDE_MIGRATION_BANNER_KEY)
+);
 
 // class MigrationNotificationBanner extends React.Component {
 //   state = {
@@ -183,33 +184,37 @@ const Black = styled.span`
   color: ${theme.text.default};
 `;
 
-const Strong = styled(Black) `
+const Strong = styled(Black)`
   color: ${theme.text.default};
   font-weight: bold;
 `;
 
-export const VotingWeightBanner = ({accountsFetching, activeAccount}) => {
-  if (accountsFetching || !activeAccount)
-    return <Padding />;
+export const VotingWeightBanner = ({ accountsFetching, activeAccount }) => {
+  if (accountsFetching || !activeAccount) return <Padding />;
 
   // mkr in wallet + mkr locked in chief (including mkr locked via a vote proxy)
-  const pollVotingPower =
-      add(activeAccount.proxy.votingPower, activeAccount.mkrBalance);
+  const pollVotingPower = add(
+    activeAccount.proxy.votingPower,
+    activeAccount.mkrBalance
+  );
 
   if (activeAccount.hasProxy) {
     return <VoterStatus />;
   } else {
-    return (<FadeIn><SmallMediumText><Strong>Connected wallet: <
-            /Strong>
-          <Black>{formatRound(pollVotingPower, 4)} MKR</Black>{
-        ' '}</SmallMediumText>
-      </FadeIn>);
+    return (
+      <FadeIn>
+        <SmallMediumText>
+          <Strong>Connected wallet: </Strong>
+          <Black>{formatRound(pollVotingPower, 4)} MKR</Black>{" "}
+        </SmallMediumText>
+      </FadeIn>
+    );
   }
 };
 
 const PollingList = ({
   accountsFetching,
-  polling : {polls},
+  polling: { polls },
   activeAccount,
   proposals,
   approvals,
@@ -219,7 +224,7 @@ const PollingList = ({
   const winningProposal = poll => {
     if (poll.legacyPoll) {
       const wp = getWinningProp({ proposals, approvals }, poll.pollId);
-      return wp ? wp.title : 'Not available';
+      return wp ? wp.title : "Not available";
     }
     const winningProp = poll.options[poll.winningProposal]
       ? poll.options[poll.winningProposal]
@@ -246,11 +251,11 @@ const PollingList = ({
                 <ExtendedLink
                   to={`/polling-proposal/${toSlug(poll.voteId)}`}
                   onClick={() => {
-                    mixpanel.track('btn-click', {
-                      id: 'poll-view-card',
-                      product: 'governance-dashboard',
-                      page: 'PollingList',
-                      section: 'poll-card'
+                    mixpanel.track("btn-click", {
+                      id: "poll-view-card",
+                      product: "governance-dashboard",
+                      page: "PollingList",
+                      section: "poll-card"
                     });
                   }}
                 >
@@ -273,11 +278,11 @@ const PollingList = ({
                       <ExtendedLink
                         to={`/polling-proposal/${toSlug(poll.voteId)}`}
                         onClick={() => {
-                          mixpanel.track('btn-click', {
-                            id: 'poll-view-btn-active',
-                            product: 'governance-dashboard',
-                            page: 'PollingList',
-                            section: 'poll-card'
+                          mixpanel.track("btn-click", {
+                            id: "poll-view-btn-active",
+                            product: "governance-dashboard",
+                            page: "PollingList",
+                            section: "poll-card"
                           });
                         }}
                       >
@@ -289,11 +294,11 @@ const PollingList = ({
                       <ExtendedLink
                         to={`/polling-proposal/${toSlug(poll.voteId)}`}
                         onClick={() => {
-                          mixpanel.track('btn-click', {
-                            id: 'poll-view-btn-inactive',
-                            product: 'governance-dashboard',
-                            page: 'PollingList',
-                            section: 'poll-card'
+                          mixpanel.track("btn-click", {
+                            id: "poll-view-btn-inactive",
+                            product: "governance-dashboard",
+                            page: "PollingList",
+                            section: "poll-card"
                           });
                         }}
                       >
