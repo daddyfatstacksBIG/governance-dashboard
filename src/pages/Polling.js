@@ -1,25 +1,27 @@
+import mixpanel from 'mixpanel-browser';
+import { isEmpty, isNil } from 'ramda';
 import React, { Fragment } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { connect } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
-import ReactMarkdown from 'react-markdown';
-import { isNil, isEmpty } from 'ramda';
-import mixpanel from 'mixpanel-browser';
-import { toSlug, formatRound, cutMiddle, eq } from '../utils/misc';
+
 import Button from '../components/Button';
 import Card from '../components/Card';
+import Dropdown from '../components/Dropdown';
 import Loader from '../components/Loader';
 import PollingVote from '../components/modals/PollingVote';
-import NotFound from './NotFound';
-import { VotingWeightBanner } from './PollingList';
+import ExternalLink from '../components/Onboarding/shared/ExternalLink';
 import { activeCanVote, getActiveVotingFor } from '../reducers/accounts';
 import { modalOpen } from '../reducers/modal';
-import { getWinningProp } from '../reducers/proposals';
 import { getOptionVotingFor, pollDataInit } from '../reducers/polling';
+import { getWinningProp } from '../reducers/proposals';
 import theme, { colors } from '../theme';
-import { ethScanLink } from '../utils/ethereum';
 import { MIN_MKR_PERCENTAGE } from '../utils/constants';
-import ExternalLink from '../components/Onboarding/shared/ExternalLink';
-import Dropdown from '../components/Dropdown';
+import { ethScanLink } from '../utils/ethereum';
+import { cutMiddle, eq, formatRound, toSlug } from '../utils/misc';
+
+import NotFound from './NotFound';
+import { VotingWeightBanner } from './PollingList';
 
 const riseUp = keyframes`
 0% {
@@ -125,7 +127,7 @@ const VoteButton = styled(Button)`
 const DescriptionCard = styled(Card)`
   margin: 0;
   max-width: 750px;
-  padding: 0px 25px 93px 25px;
+  padding: 15px 25px 93px 25px;
   color: #546978;
   line-height: 30px;
 `;

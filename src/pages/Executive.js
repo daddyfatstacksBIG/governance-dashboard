@@ -1,22 +1,23 @@
+import { isEmpty, isNil } from 'ramda';
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 import { connect } from 'react-redux';
 import styled, { keyframes } from 'styled-components';
-import ReactMarkdown from 'react-markdown';
-import { isNil, isEmpty } from 'ramda';
 
-import { toSlug } from '../utils/misc';
-import { ethScanLink } from '../utils/ethereum';
-import Vote from '../components/modals/Vote';
 import Button from '../components/Button';
 import Card from '../components/Card';
-import Loader from '../components/Loader';
-import Timer from '../components/Timer';
 import ClosedStatus from '../components/ClosedStatus';
+import Loader from '../components/Loader';
+import Vote from '../components/modals/Vote';
+import Timer from '../components/Timer';
 import { activeCanVote, getActiveVotingFor } from '../reducers/accounts';
-import NotFound from './NotFound';
-import theme, { colors } from '../theme';
-import { formatDate, cutMiddle } from '../utils/misc';
 import { modalOpen } from '../reducers/modal';
+import theme, { colors } from '../theme';
+import { ethScanLink } from '../utils/ethereum';
+import { toSlug } from '../utils/misc';
+import { cutMiddle, formatDate } from '../utils/misc';
+
+import NotFound from './NotFound';
 
 const riseUp = keyframes`
 0% {
@@ -97,7 +98,7 @@ const RightPanels = styled.div`
 
 const DescriptionCard = styled(Card)`
   max-width: 750px;
-  padding: 0px 25px 18px 25px;
+  padding: 15px 25px 18px 25px;
   color: #546978;
   line-height: 30px;
 `;
@@ -237,7 +238,7 @@ function Executive({
             skipHtml={true}
             source={proposal.about}
           />
-        </DescriptionCard>
+        </DescriptionCard>{' '}
         <RightPanels>
           <DetailsCard>
             <CardTitle>Details</CardTitle>
