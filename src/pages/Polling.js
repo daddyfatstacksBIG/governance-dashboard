@@ -1,25 +1,27 @@
-import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
-import styled, { keyframes } from 'styled-components';
-import ReactMarkdown from 'react-markdown';
-import { isNil, isEmpty } from 'ramda';
 import mixpanel from 'mixpanel-browser';
-import { toSlug, formatRound, cutMiddle, eq } from '../utils/misc';
+import {isEmpty, isNil} from 'ramda';
+import React, {Fragment} from 'react';
+import ReactMarkdown from 'react-markdown';
+import {connect} from 'react-redux';
+import styled, {keyframes} from 'styled-components';
+
 import Button from '../components/Button';
 import Card from '../components/Card';
+import Dropdown from '../components/Dropdown';
 import Loader from '../components/Loader';
 import PollingVote from '../components/modals/PollingVote';
-import NotFound from './NotFound';
-import { VotingWeightBanner } from './PollingList';
-import { activeCanVote, getActiveVotingFor } from '../reducers/accounts';
-import { modalOpen } from '../reducers/modal';
-import { getWinningProp } from '../reducers/proposals';
-import { getOptionVotingFor, pollDataInit } from '../reducers/polling';
-import theme, { colors } from '../theme';
-import { ethScanLink } from '../utils/ethereum';
-import { MIN_MKR_PERCENTAGE } from '../utils/constants';
 import ExternalLink from '../components/Onboarding/shared/ExternalLink';
-import Dropdown from '../components/Dropdown';
+import {activeCanVote, getActiveVotingFor} from '../reducers/accounts';
+import {modalOpen} from '../reducers/modal';
+import {getOptionVotingFor, pollDataInit} from '../reducers/polling';
+import {getWinningProp} from '../reducers/proposals';
+import theme, {colors} from '../theme';
+import {MIN_MKR_PERCENTAGE} from '../utils/constants';
+import {ethScanLink} from '../utils/ethereum';
+import {cutMiddle, eq, formatRound, toSlug} from '../utils/misc';
+
+import NotFound from './NotFound';
+import {VotingWeightBanner} from './PollingList';
 
 const riseUp = keyframes`
 0% {
@@ -54,9 +56,9 @@ const VoteSelection = styled.div`
   justify-content: space-between;
 `;
 
-const DetailsPanelCard = styled(Card)`
+const DetailsPanelCard = styled(Card) `
   margin-bottom: 29px;
-  font-size: ${({ theme }) => theme.fonts.size.medium};
+  font-size: ${({theme}) => theme.fonts.size.medium};
   padding: 14px 20px;
 `;
 
@@ -81,7 +83,7 @@ const Black = styled.span`
   color: ${theme.text.default};
 `;
 
-const Strong = styled(Black)`
+const Strong = styled(Black) `
   color: ${theme.text.default};
   font-weight: bold;
 `;
@@ -91,7 +93,7 @@ const Blue = styled.span`
   cursor: pointer;
 `;
 
-const DetailsItem = styled(Black)`
+const DetailsItem = styled(Black) `
   display: flex;
   flex-direction: row;
   padding: 8px 0px;
@@ -114,15 +116,15 @@ const DropdownText = styled.p`
   width: 125px;
   margin-left: 13px;
   margin-right: 13px;
-  color: ${({ color }) => (color ? `rgb(${colors[color]})` : 'black')};
+  color: ${({color}) => (color ? `rgb(${colors[color]})` : 'black')};
 `;
 
-const VoteButton = styled(Button)`
+const VoteButton = styled(Button) `
   border: 0px;
   padding: 0px;
 `;
 
-const DescriptionCard = styled(Card)`
+const DescriptionCard = styled(Card) `
   margin: 0;
   max-width: 750px;
   padding: 15px 25px 93px 25px;
@@ -130,17 +132,17 @@ const DescriptionCard = styled(Card)`
   line-height: 30px;
 `;
 
-const DownloadButton = styled(Button)`
+const DownloadButton = styled(Button) `
   position: absolute;
   bottom: 20px;
 `;
 
-const DetailsCardItem = ({ name, value, component }) => (
-  <DetailsItem>
-    <DetailsCardText>{name}</DetailsCardText>
+const DetailsCardItem = ({name,
+                          value,
+                          component}) => (<DetailsItem><DetailsCardText>{
+    name}</DetailsCardText>
     {value ? value : component}
-  </DetailsItem>
-);
+  </DetailsItem>);
 
 const getTotalVotesForOption = (voteBreakdown, selectedOptionId) => {
   return voteBreakdown[selectedOptionId].mkrSupport;
