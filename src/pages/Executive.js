@@ -1,8 +1,8 @@
-import {isEmpty, isNil} from 'ramda';
+import { isEmpty, isNil } from 'ramda';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import {connect} from 'react-redux';
-import styled, {keyframes} from 'styled-components';
+import { connect } from 'react-redux';
+import styled, { keyframes } from 'styled-components';
 
 import Button from '../components/Button';
 import Card from '../components/Card';
@@ -10,12 +10,12 @@ import ClosedStatus from '../components/ClosedStatus';
 import Loader from '../components/Loader';
 import Vote from '../components/modals/Vote';
 import Timer from '../components/Timer';
-import {activeCanVote, getActiveVotingFor} from '../reducers/accounts';
-import {modalOpen} from '../reducers/modal';
-import theme, {colors} from '../theme';
-import {ethScanLink} from '../utils/ethereum';
-import {toSlug} from '../utils/misc';
-import {cutMiddle, formatDate} from '../utils/misc';
+import { activeCanVote, getActiveVotingFor } from '../reducers/accounts';
+import { modalOpen } from '../reducers/modal';
+import theme, { colors } from '../theme';
+import { ethScanLink } from '../utils/ethereum';
+import { toSlug } from '../utils/misc';
+import { cutMiddle, formatDate } from '../utils/misc';
 
 import NotFound from './NotFound';
 
@@ -96,33 +96,33 @@ const RightPanels = styled.div`
   width: 340px;
 `;
 
-const DescriptionCard = styled(Card) `
+const DescriptionCard = styled(Card)`
   max-width: 750px;
   padding: 15px 25px 18px 25px;
   color: #546978;
   line-height: 30px;
 `;
 
-const DetailsCard = styled(Card) `
+const DetailsCard = styled(Card)`
   margin-bottom: 29px;
   height: 204px;
-  font-size: ${({theme}) => theme.fonts.size.medium};
+  font-size: ${({ theme }) => theme.fonts.size.medium};
   padding: 14px 20px;
 `;
 
-const SupporterCard = styled(Card) `
+const SupporterCard = styled(Card)`
   padding: 14px 20px;
   height: 334px;
 `;
 
 const Detail = styled.p`
-  color: ${({theme}) => theme.text.dim_grey};
+  color: ${({ theme }) => theme.text.dim_grey};
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 26px;
   font-size: 14px;
   &::after {
-    content: ${({pct}) => (pct ? '"%"' : '')};
+    content: ${({ pct }) => (pct ? '"%"' : '')};
   }
 `;
 
@@ -166,7 +166,7 @@ const LoadingWrapper = styled.div`
 `;
 
 const toChecksumAddress = address => {
-  const {toChecksumAddress} = window.maker.service('web3')._web3.utils;
+  const { toChecksumAddress } = window.maker.service('web3')._web3.utils;
   return toChecksumAddress(address);
 };
 
@@ -183,7 +183,7 @@ function Executive({
 }) {
   if (isNil(proposal) || isEmpty(proposal) || !isValidRoute)
     return <NotFound />;
-  const {active, topicKey} = proposal;
+  const { active, topicKey } = proposal;
   const supporters = voteState[proposal.source.toLowerCase()] || null;
   return (
     <RiseUp>
@@ -196,7 +196,9 @@ function Executive({
             />
             {active && proposal.govVote ? (
               <Timer
-  fs = {16} endTimestamp = {proposal.end_timestamp} small
+                fs={16}
+                endTimestamp={proposal.end_timestamp}
+                small
                 mt="6"
               />
             ) : null}
@@ -226,23 +228,26 @@ function Executive({
               topicKey={topicKey}
               proposalAddress={proposal.source}
             />
-          )
-}
-</StyledTop>
-      </WhiteBackground><ContentWrapper><DescriptionCard><
-    ReactMarkdown
-className = "markdown"
-skipHtml = {true} source =
-    {proposal.about} />
-        </DescriptionCard > <RightPanels><DetailsCard>
-    <CardTitle>Details<
-        /CardTitle>
+          )}
+        </StyledTop>
+      </WhiteBackground>
+      <ContentWrapper>
+        <DescriptionCard>
+          <ReactMarkdown
+            className="markdown"
+            skipHtml={true}
+            source={proposal.about}
+          />
+        </DescriptionCard>{' '}
+        <RightPanels>
+          <DetailsCard>
+            <CardTitle>Details</CardTitle>
             <Supporter>
               <Detail>Started</Detail>
-    <Detail>{formatDate(proposal.date)}</Detail>
+              <Detail>{formatDate(proposal.date)}</Detail>
             </Supporter>
-    <Supporter><Detail>Source<
-        /Detail>
+            <Supporter>
+              <Detail>Source</Detail>
               <Address
                 target="_blank"
                 rel="noopener noreferrer"
@@ -250,19 +255,19 @@ skipHtml = {true} source =
               >
                 {cutMiddle(proposal.source, 8, 8)}
               </Address>
-    </Supporter>
-          </DetailsCard>{
-        proposal.active
-        ? (<SupporterCard><CardTitle>Top Supporters<
-               /CardTitle>
+            </Supporter>
+          </DetailsCard>
+          {proposal.active ? (
+            <SupporterCard>
+              <CardTitle>Top Supporters</CardTitle>
               <SupporterWrapper>
                 {supporters ? (
                   supporters.map(supporter => (
                     <Supporter key={supporter.address}>
-                      <Detail pct>{supporter.percent}</Detail><
-           Address
-target = "_blank"
-rel = "noopener noreferrer"
+                      <Detail pct>{supporter.percent}</Detail>
+                      <Address
+                        target="_blank"
+                        rel="noopener noreferrer"
                         href={ethScanLink(supporter.address, network)}
                       >
                         {toChecksumAddress(supporter.address)}
@@ -272,7 +277,9 @@ rel = "noopener noreferrer"
                 ) : voteStateFetching ? (
                   <LoadingWrapper>
                     <Loader
-                        size = {20} mt = {100} color = "header"
+                      size={20}
+                      mt={100}
+                      color="header"
                       background="white"
                     />
                   </LoadingWrapper>
@@ -281,11 +288,10 @@ rel = "noopener noreferrer"
                 )}
               </SupporterWrapper>
             </SupporterCard>
-          ) : null
-                      }
-                      </RightPanels>
-      </ContentWrapper><
-                          /RiseUp>
+          ) : null}
+        </RightPanels>
+      </ContentWrapper>
+    </RiseUp>
   );
 }
 
